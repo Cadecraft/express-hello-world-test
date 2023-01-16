@@ -52,7 +52,7 @@ const html = `
   </head>
   <body>
     <section>
-      Hello from Render!
+      None can lift a quain stone alone.
     </section>
   </body>
 </html>
