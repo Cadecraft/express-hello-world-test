@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Head -->
+    <title>Express Hello World Test</title>
+    <style>
+        /* Style goes here */
+    </style>
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script defer>
+        // Connection
+        var socket = io();
+        // Button clicks and updates
+        document.getElementById('click-button').addEventListener('click', function() {
+            socket.emit('clickedbutton', 1);
+        });
+        socket.on('update-totalclicks', function(newTotalClicks) {
+            document.getElementById('click-counter').innerText = ""+newTotalClicks;
+        });
+        socket.on('update-totalusers', function(newTotalUsers) {
+            document.getElementById('connection-counter').innerText = ""+newTotalUsers;
+        });
+    </script>
+</head>
+<body>
+    <h1>Express Hello World Test by Cadecraft</h1>
+    <span id="connection-counter">?</span> connections!
+    <br><button id="click-button">Click here</button> Clicked <span id="click-counter">?</span> times!
+</body>
+</html>
