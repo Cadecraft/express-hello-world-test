@@ -18,12 +18,13 @@ const passwordAdmin = 'ojqewt09u0948u4098j9ija9ijcbnneqt9d901j234069i2353';
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
-app.get('/styles.css', (req, res) => {
+app.use(express.static('static'));
+/*app.get('/styles.css', (req, res) => {
     res.sendFile(__dirname + '/styles.css');
-})
+});
 app.get('/script.js', (req, res) => {
     res.sendFile(__dirname, '/script.js');
-})
+});*/
 
 // Variables
 var totalClicks = 0;
