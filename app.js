@@ -14,23 +14,10 @@ const port = process.env.PORT || 3001;
 const passwordAdmin = 'ojqewt09u0948u4098j9ija9ijcbnneqt9d901j234069i2353';
 
 // Send HTML
-//app.get("/", (req, res) => res.type('html').send(html)); // from example
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 app.use(express.static('static'));
-/*app.get('/static/styles.css', (req, res) => {
-    res.sendFile(__dirname + '/static/styles.css');
-});
-app.get('/static/script.js', (req, res) => {
-    res.send(__dirname + '/static/script.js');
-})*/
-/*app.get('/styles.css', (req, res) => {
-    res.sendFile(__dirname + '/styles.css');
-});
-app.get('/script.js', (req, res) => {
-    res.sendFile(__dirname, '/script.js');
-});*/
 
 // Variables
 var totalClicks = 0;
@@ -40,7 +27,7 @@ var userData = {};
 // On events
 io.on('connection', (socket) => {
     // USER CONNECTED
-    console.log('USER ' + socket.id +' CONNECTED');
+    console.log('CONNECTION: User ' + socket.id + ' CONNECTED');
     // Create user data
     userData[socket.id] = {
         clickCount: 0,
@@ -54,7 +41,7 @@ io.on('connection', (socket) => {
     // On disconnection
     socket.on('disconnect', function() {
         // USER DISCONNECTED
-        console.log('USER ' + socket.id + 'DISCONNECTED');
+        console.log('DISCONNECTION: User ' + socket.id + ' DISCONNECTED');
         // Delete user data
         delete userData[socket.id];
         // Update total users
@@ -96,12 +83,16 @@ io.on('connection', (socket) => {
         // Check if admin
         if (userData[socket.id].privelige == "admin") {
             // Admin: clear clicks
-            clickCount = 0;
+            console.log('Admin ' + socket.id + ' cleared clicks');
+            totalClicks = 0;
+            // Update ALL clients
+            io.emit('update_totalClicks', totalClicks);
         } else {
             // Not admin
+            console.log('User ' + socket.id + ' failed to clear clicks');
         }
     });
 });
 
 // Listen
-server.listen(port, () => console.log("Express Hello World Test listening on port "+port)); // Render ex. had 'app.listen' instead
+server.listen(port, () => console.log("Express Hello World Test listening on port " + port)); // Render ex. had 'app.listen' instead

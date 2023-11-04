@@ -24,15 +24,16 @@ function tryBecomeAdmin(password) {
 }
 socket.on('update_adminSuccess', function() {
     // Successfully became admin
-    console.log('Successfully became admin');
+    console.log('Admin: successfully became admin');
     document.getElementById('adminPanel').style.display = 'block';
 });
 socket.on('update_adminFailed', function() {
     // Failed to become admin
-    console.log('Failed to become admin');
+    console.log('Admin: failed to become admin');
     document.getElementById('adminPanel').style.display = 'none';
 });
 document.getElementById('admin_clearClicks').addEventListener('click', function() {
+    console.log('Admin: trying to clear clicks')
     socket.emit('admin_clearClicks');
 });
 
