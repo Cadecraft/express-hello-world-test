@@ -11,9 +11,11 @@ const port = process.env.PORT || 3001;
 // Send HTML
 //app.get("/", (req, res) => res.type('html').send(html)); // from example
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/styles.css');
     res.sendFile(__dirname + '/index.html');
 });
+app.get('/styles.css', (req, res) => {
+    res.sendFile(__dirname + '/styles.css');
+})
 
 // Variables
 var totalClicks = 0;
