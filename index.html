@@ -2,13 +2,11 @@
 <html>
 <head>
     <!-- Head -->
-    <title>Express Hello World Test</title>
-    <style>
-        /* Style goes here */
-    </style>
+    <title>Express Hello World Test by Cadecraft</title>
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
     <!-- Scripts -->
     <script src="/socket.io/socket.io.js"></script>
-    
 </head>
 <body>
     <h1>Express Hello World Test by Cadecraft</h1>
@@ -18,16 +16,19 @@
     <script defer>
         // Connection
         var socket = io();
-        // Button clicks and updates
-        socket.on('update-totalclicks', function(newTotalClicks) {
+        // Updates bindings
+        socket.on('update_totalClicks', function(newTotalClicks) {
             document.getElementById('click-counter').innerText = ""+newTotalClicks;
         });
-        socket.on('update-totalusers', function(newTotalUsers) {
+        socket.on('update_totalUsers', function(newTotalUsers) {
             document.getElementById('connection-counter').innerText = ""+newTotalUsers;
         });
+        // Button bindings
         document.getElementById('click-button').addEventListener('click', function() {
-            socket.emit('clickedbutton', 1);
+            socket.emit('clickedButton', 1);
         });
+        // Update from the server once loaded
+        socket.emit('request_updateAll');
     </script>
 </body>
 </html>

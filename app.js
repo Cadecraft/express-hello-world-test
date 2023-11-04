@@ -11,6 +11,7 @@ const port = process.env.PORT || 3001;
 // Send HTML
 //app.get("/", (req, res) => res.type('html').send(html)); // from example
 app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/styles.css');
     res.sendFile(__dirname + '/index.html');
 });
 
@@ -20,20 +21,36 @@ var totalUsers = 0;
 
 // On events
 io.on('connection', (socket) => {
-    console.log('- A user connected');
+    // USER CONNECTED
+    console.log('USER CONNECTED');
     // Update total users
     totalUsers++;
-    io.emit('update-totalusers', totalUsers);
-    // Events
+    io.emit('update_totalUsers', totalUsers);
+
+    // EVENTS
     // On clicked button
-    socket.on('clickedbutton', (amtClicks) => {
+    socket.on('clickedButton', (amtClicks) => {
         console.log('- A user clicked the button');
         // Increase total clicks
         totalClicks += amtClicks;
-        // Emit
-        io.emit('update-totalclicks', totalClicks);
+        // Update ALL clients
+        io.emit('update_totalClicks', totalClicks);
     });
-})
+    // On request update
+    socket.on('request_updateAll', function() {
+        // Update all
+        socket.emit('update_totalClicks', totalClicks);
+        socket.emit('update_totalUsers', totalUsers);
+    });
+    // On disconnection
+    socket.on('disconnect', function() {
+        // USER DISCONNECTED
+        console.log('USER DISCONNECTED')
+        // Update total users
+        totalUsers--;
+        io.emit('update_totalUsers', totalUsers);
+    });
+});
 
 // Listen
 server.listen(port, () => console.log("Express Hello World Test listening on port "+port)); // Render ex. had 'app.listen' instead
