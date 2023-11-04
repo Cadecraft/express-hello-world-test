@@ -16,13 +16,15 @@ const passwordAdmin = 'ojqewt09u0948u4098j9ija9ijcbnneqt9d901j234069i2353';
 // Send HTML
 //app.get("/", (req, res) => res.type('html').send(html)); // from example
 app.get('/', (req, res) => {
+    res.type('html');
     res.sendFile(__dirname + '/index.html');
 });
 app.get('/static/styles.css', (req, res) => {
+    res.type('css');
     res.sendFile(__dirname + '/static/styles.css');
 });
 app.get('/static/script.js', (req, res) => {
-    res.setHeader('content-type', 'text/javascript');
+    res.type('javascript');
     res.send(__dirname + '/static/script.js');
 })
 //app.use(express.static('static'));
