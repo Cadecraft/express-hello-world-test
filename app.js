@@ -21,6 +21,9 @@ app.get('/', (req, res) => {
 app.get('/styles.css', (req, res) => {
     res.sendFile(__dirname + '/styles.css');
 })
+app.get('/script.js', (req, res) => {
+    res.sendFile(__dirname, '/script.js');
+})
 
 // Variables
 var totalClicks = 0;
